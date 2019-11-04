@@ -91,7 +91,30 @@ export const Algorithm = styled.div`
 
   align-items: center;
 
+  .history {
+    justify-content: center;
+    align-items: center;
+
+    font-size: 14px;
+  }
+
   p {
     justify-content: center;
+  }
+
+  table {
+    max-width: 520px;
+    width: 100%;
+
+    table-layout: fixed;
+
+    th {
+      height: 50px;
+    }
+
+    td {
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;

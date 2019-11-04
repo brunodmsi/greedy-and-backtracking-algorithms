@@ -5,20 +5,34 @@ import GraphVertex from '../algorithms/data-structures/Graph/GraphVertex';
 import Prim from '../algorithms/graph/prim';
 import Kruskal from '../algorithms/graph/kruskal';
 
-export default function (algorithm) {
-  if (algorithm === "") throw Error()
+import histories from '../json/algorithms';
 
-  const graph = setGraph();
+export default {
+  getPath(algorithm) {
+    if (algorithm === "") throw Error()
 
-  const res = algorithm === 'prim'
-    ? Prim(graph)
-    : Kruskal(graph)
+    const graph = setGraph();
 
-  return {
-    algorithm: algorithm.replace(/^./, algorithm[0].toUpperCase()),
-    res
-  };
+    const res = algorithm === 'prim'
+      ? Prim(graph)
+      : Kruskal(graph)
+
+    return {
+      algorithm: algorithm.replace(/^./, algorithm[0].toUpperCase()),
+      res
+    };
+  },
+
+  getHistory(algorithm) {
+    if (algorithm === "") throw Error()
+
+    const history = histories[algorithm];
+
+    return history;
+  }
 }
+
+
 
 function setGraph() {
   const graph = new Graph();

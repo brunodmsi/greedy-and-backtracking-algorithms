@@ -5,7 +5,7 @@ import { Container, Algorithm } from './styles';
 
 import GraphImage from '../../assets/graph.png';
 
-import getPath from '../../services/api';
+import api from '../../services/api';
 
 const options = [
   { id: 'prim', title: 'Prim' },
@@ -15,23 +15,23 @@ const options = [
 export default function Main() {
   const [error, setError] = useState(false);
   const [graph, setGraph] = useState([]);
+  const [history, setHistory] = useState('');
 
   function handleSubmit(data) {
     const { algorithm } = data;
 
     try {
-      const graph = getPath(algorithm);
+      const graph = api.getPath(algorithm);
+      const history = api.getHistory(algorithm);
 
       graph.res.edges = Object.keys(graph.res.edges)
         .map(i => graph.res.edges[i])
 
       setGraph(graph);
+      setHistory(history);
 
-      console.log(graph)
-      
       setError(false);
     } catch (error) {
-      console.log(error)
       setError(true);
     }
   }
@@ -47,7 +47,7 @@ export default function Main() {
       <img src={GraphImage} alt="Graph"/>
 
       <p className="error">{error === true ? 'Selecione um algoritmo antes de realizar a busca' : ''}</p>
-      
+
       <Form onSubmit={handleSubmit}>
         <Select
           name="algorithm"
@@ -59,11 +59,18 @@ export default function Main() {
       </Form>
 
       <Algorithm>
+        {history.length > 0 ? (
+          <p className="history">
+            <h3>História</h3>
+            {history}
+          </p>
+        ) : ''}
+
         {graph.length === 0 ? ''
           : (
             <>
               <p>Resultado do algoritmo {graph.algorithm}</p>
-              
+
               <table>
                 <thead>
                   <tr>
