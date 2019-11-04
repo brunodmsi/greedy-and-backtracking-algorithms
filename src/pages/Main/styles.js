@@ -18,6 +18,17 @@ export const Container = styled.div`
     margin-right: 20px;
   }
 
+  .error {
+    display: flex;
+
+    color: #cd0000;
+
+    margin-bottom: 10px;
+
+    justify-content: center;
+    align-items: center;
+  }
+
   img {
     max-width: 400px;
     align-self: center;
@@ -73,5 +84,14 @@ export const Container = styled.div`
 `;
 
 export const Algorithm = styled.div`
+  display: flex;
+  flex-direction: column;
 
+  margin-top: 30px;
+
+  align-items: center;
+
+  p {
+    justify-content: center;
+  }
 `;

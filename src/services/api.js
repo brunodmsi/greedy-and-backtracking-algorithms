@@ -6,7 +6,7 @@ import Prim from '../algorithms/graph/prim';
 import Kruskal from '../algorithms/graph/kruskal';
 
 export default function (algorithm) {
-  if (algorithm === "") return new Error('Selecione um algoritmo')
+  if (algorithm === "") throw Error()
 
   const graph = setGraph();
 
@@ -15,7 +15,7 @@ export default function (algorithm) {
     : Kruskal(graph)
 
   return {
-    algorithm,
+    algorithm: algorithm.replace(/^./, algorithm[0].toUpperCase()),
     res
   };
 }

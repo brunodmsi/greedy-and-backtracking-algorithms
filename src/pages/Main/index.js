@@ -14,6 +14,7 @@ const options = [
 
 export default function Main() {
   const [error, setError] = useState(false);
+  const [graph, setGraph] = useState([]);
 
   function handleSubmit(data) {
     const { algorithm } = data;
@@ -21,10 +22,16 @@ export default function Main() {
     try {
       const graph = getPath(algorithm);
 
-      console.log(graph);
+      graph.res.edges = Object.keys(graph.res.edges)
+        .map(i => graph.res.edges[i])
 
+      setGraph(graph);
+
+      console.log(graph)
+      
       setError(false);
     } catch (error) {
+      console.log(error)
       setError(true);
     }
   }
@@ -38,7 +45,9 @@ export default function Main() {
       </p>
 
       <img src={GraphImage} alt="Graph"/>
-      <p>{error === '' ? 'Selecione um algoritmo' : ''}</p>
+
+      <p className="error">{error === true ? 'Selecione um algoritmo antes de realizar a busca' : ''}</p>
+      
       <Form onSubmit={handleSubmit}>
         <Select
           name="algorithm"
@@ -50,7 +59,40 @@ export default function Main() {
       </Form>
 
       <Algorithm>
+        {graph.length === 0 ? ''
+          : (
+            <>
+              <p>Resultado do algoritmo {graph.algorithm}</p>
+              
+              <table>
+                <thead>
+                  <tr>
+                    <th>Origem</th>
+                    <th>Destino</th>
+                    <th>Peso</th>
+                  </tr>
+                </thead>
 
+                <tbody>
+                  {graph.res.edges.map(edge => {
+                    return (
+                      <tr>
+                        <td>
+                          {edge.startVertex.value}
+                        </td>
+                        <td>
+                          {edge.endVertex.value}
+                        </td>
+                        <td>
+                          {edge.weight}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </>
+          )}
       </Algorithm>
     </Container>
   );
