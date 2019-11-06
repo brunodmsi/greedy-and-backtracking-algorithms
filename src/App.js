@@ -2,17 +2,19 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import GlobalStyle from './styles/global';
-import Header from './components/Header'
 
 import Main from './pages/Main';
+import Backtracking from './pages/Backtracking';
+import PrimKruskal from './pages/PrimKruskal';
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Header />
       <Switch>
         <Route path="/" exact component={Main} />
+        <Route path="/backtracking" component={Backtracking} />
+        <Route path="/prim-kruskal" component={PrimKruskal} />
       </Switch>
     </BrowserRouter>
   );

@@ -8,6 +8,10 @@ export const Container = styled.header`
 
   h1 {
     color: #ffffff;
+
+    :hover {
+      cursor: pointer;
+    }
   }
 
   span {

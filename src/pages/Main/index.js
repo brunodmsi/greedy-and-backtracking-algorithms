@@ -1,106 +1,35 @@
-import React, { useState } from 'react';
-import { Form, Select } from '@rocketseat/unform';
+import React from 'react';
 
-import { Container, Algorithm } from './styles';
+import Header from '../../components/Header';
 
-import GraphImage from '../../assets/graph.png';
-
-import api from '../../services/api';
+import { Container, Algorithms, LinkStyled } from './styles';
 
 const options = [
-  { id: 'prim', title: 'Prim' },
-  { id: 'kruskal', title: 'Kruskal' }
+  { key: 0, path: '/backtracking', name: 'Backtracking' },
+  { key: 1, path: '/prim-kruskal', name: 'Prim e Kruskal (Gulosos)' },
 ]
 
 export default function Main() {
-  const [error, setError] = useState(false);
-  const [graph, setGraph] = useState([]);
-  const [history, setHistory] = useState('');
+  return ( <>
+    <Header name="Escolha seu algoritmo" />
 
-  function handleSubmit(data) {
-    const { algorithm } = data;
-
-    try {
-      const graph = api.getPath(algorithm);
-      const history = api.getHistory(algorithm);
-
-      graph.res.edges = Object.keys(graph.res.edges)
-        .map(i => graph.res.edges[i])
-
-      setGraph(graph);
-      setHistory(history);
-
-      setError(false);
-    } catch (error) {
-      setError(true);
-    }
-  }
-
-  return (
     <Container>
-      <h1>Desafio</h1>
-      <p>Desenvolva um programa com interface amigável, que utilizando
-        o algoritmo de Prim e Kruskal solucione o grafo do slide em anexo
-        (mesmo da aula).
+      <h1>Algoritmos Greedy's e Backtracking</h1>
+      <p>
+        O objetivo desta aplicação é juntar trabalhos
+        passados em aula e junta-los em um ambiente só.
       </p>
 
-      <img src={GraphImage} alt="Graph"/>
-
-      <p className="error">{error === true ? 'Selecione um algoritmo antes de realizar a busca' : ''}</p>
-
-      <Form onSubmit={handleSubmit}>
-        <Select
-          name="algorithm"
-          options={options}
-          placeholder="Selecione um algoritmo"
-        />
-
-        <button>Fazer a busca</button>
-      </Form>
-
-      <Algorithm>
-        {history.length > 0 ? (
-          <p className="history">
-            <h3>História</h3>
-            {history}
-          </p>
-        ) : ''}
-
-        {graph.length === 0 ? ''
-          : (
-            <>
-              <p>Resultado do algoritmo {graph.algorithm}</p>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th>Origem</th>
-                    <th>Destino</th>
-                    <th>Peso</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {graph.res.edges.map(edge => {
-                    return (
-                      <tr>
-                        <td>
-                          {edge.startVertex.value}
-                        </td>
-                        <td>
-                          {edge.endVertex.value}
-                        </td>
-                        <td>
-                          {edge.weight}
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </>
-          )}
-      </Algorithm>
-    </Container>
+      <Algorithms>
+        {options.map(option => (
+          <LinkStyled
+            key={option.key}
+            to={option.path}
+          >
+            {option.name.toUpperCase()}
+          </LinkStyled>
+        ))}
+      </Algorithms>
+    </Container> </>
   );
 }
