@@ -4,14 +4,15 @@ import GraphVertex from '../algorithms/data-structures/Graph/GraphVertex';
 
 import Prim from '../algorithms/graph/prim';
 import Kruskal from '../algorithms/graph/kruskal';
+import DFS from '../algorithms/graph/depthFirstSearch';
 
 import histories from '../json/algorithms';
 
 export default {
-  getPath(algorithm) {
+  getGreedy(algorithm) {
     if (algorithm === "") throw Error()
 
-    const graph = setGraph();
+    const { graph } = setGraph();
 
     const res = algorithm === 'prim'
       ? Prim(graph)
@@ -23,6 +24,13 @@ export default {
     };
   },
 
+  getBacktracking() {
+    const { graph, vertexA, vertexB } = setGraph();
+
+    const dfs = DFS(graph, vertexA);
+    console.log(dfs);
+  },
+
   getHistory(algorithm) {
     if (algorithm === "") throw Error()
 
@@ -31,8 +39,6 @@ export default {
     return history;
   }
 }
-
-
 
 function setGraph() {
   const graph = new Graph();
@@ -72,7 +78,11 @@ function setGraph() {
   graph.addEdge(new GraphEdge(g, h, 1));
   graph.addEdge(new GraphEdge(h, i, 7));
 
-  return graph;
+  return {
+    graph,
+    vertexA: a,
+    vertexB: b
+  };
 }
 
 

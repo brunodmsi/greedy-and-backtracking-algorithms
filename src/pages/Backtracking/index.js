@@ -20,6 +20,8 @@ export default function Backtracking() {
         abaixo.
       </p>
 
+      {api.getBacktracking()}
+
       <img src={GraphImage} alt="Graph"/>
     </Container> </>
   );

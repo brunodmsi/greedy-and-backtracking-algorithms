@@ -23,7 +23,7 @@ export default function PrimKruskal() {
     const { algorithm } = data;
 
     try {
-      const graph = api.getPath(algorithm);
+      const graph = api.getGreedy(algorithm);
       const history = api.getHistory(algorithm);
 
       graph.res.edges = Object.keys(graph.res.edges)
