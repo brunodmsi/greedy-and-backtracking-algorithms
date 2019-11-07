@@ -25,10 +25,9 @@ export default {
   },
 
   getBacktracking() {
-    const { graph, vertexA, vertexB } = setGraph();
+    const { graph, vertexA } = setGraph();
 
     const dfs = DFS(graph, vertexA);
-    console.log(dfs);
   },
 
   getHistory(algorithm) {

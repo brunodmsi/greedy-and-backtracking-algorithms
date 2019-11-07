@@ -45,12 +45,12 @@ function initCallbacks(callbacks = {}) {
  * @param {GraphVertex} previousVertex
  * @param {Callbacks} callbacks
  */
-function depthFirstSearchRecursive(graph, currentVertex, previousVertex, callbacks) {
+function depthFirstSearchRecursive(graph, currentVertex, previousVertex, callbacks, res=[]) {
   callbacks.enterVertex({ currentVertex, previousVertex });
 
   graph.getNeighbors(currentVertex).forEach((nextVertex) => {
     if (callbacks.allowTraversal({ previousVertex, currentVertex, nextVertex })) {
-      depthFirstSearchRecursive(graph, nextVertex, currentVertex, callbacks);
+      depthFirstSearchRecursive(graph, nextVertex, currentVertex, callbacks, res);
     }
   });
 
@@ -64,6 +64,6 @@ function depthFirstSearchRecursive(graph, currentVertex, previousVertex, callbac
  */
 export default function depthFirstSearch(graph, startVertex, callbacks) {
   const previousVertex = null;
-  depthFirstSearchRecursive(graph, startVertex, previousVertex, initCallbacks(callbacks));
-  return callbacks;
+  const initiatedCallbacks = initCallbacks(callbacks);
+  depthFirstSearchRecursive(graph, startVertex, previousVertex, initiatedCallbacks);
 }
